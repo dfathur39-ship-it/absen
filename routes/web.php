@@ -5,9 +5,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\QrAbsenController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\StaffAbsenController;
 use Illuminate\Support\Facades\Route;
 
 // Guest: redirect ke login
@@ -15,17 +15,14 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-// Login untuk semua (admin & siswa)
+// Login untuk semua (admin & staff)
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
-    // Register hanya untuk Siswa (admin tidak bisa register)
+    // Register untuk Staff (admin tidak bisa register)
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
 });
-
-// Scan QR absen: bisa diakses guest (akan redirect login) atau auth
-Route::get('/absen/scan/{token}', [QrAbsenController::class, 'scanPage'])->name('absen.scan');
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -33,13 +30,13 @@ Route::middleware('auth')->group(function () {
     // Dashboard (setelah login)
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    // Absen Staff (foto + status + PDF jika sakit/izin)
+    Route::get('/absen', [StaffAbsenController::class, 'create'])->name('staff.absen.create');
+    Route::post('/absen', [StaffAbsenController::class, 'store'])->name('staff.absen.store');
+
     // Profil
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-
-    // QR Absen: admin tampilkan QR, siswa scan
-    Route::get('/qrabsen', [QrAbsenController::class, 'showQr'])->name('qrabsen.show')->middleware('role:admin');
-    Route::post('/absen/submit', [QrAbsenController::class, 'submitScan'])->name('absen.submit');
 
     // Admin only: Kelas, Siswa, Absensi manual, Report
     Route::middleware('role:admin')->group(function () {

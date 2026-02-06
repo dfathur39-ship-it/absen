@@ -21,7 +21,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>Absensi Siswa</h1>
+        <h1>Absensi Staff</h1>
         <h2>LAPORAN ABSENSI BULANAN - {{ $namaBulan }} {{ $tahun }}</h2>
         <p>Kelas: {{ $kelas->tingkat }} {{ $kelas->nama_kelas }} {{ $kelas->jurusan ? '- '.$kelas->jurusan : '' }}</p>
     </div>

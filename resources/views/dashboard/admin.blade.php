@@ -13,29 +13,18 @@
     </div>
     <div class="col-lg-8">
         <div class="row g-3">
-            <div class="col-6 col-md-3">
+            <div class="col-6 col-md-4">
                 <div class="stat-card primary">
                     <div class="d-flex align-items-center gap-3">
                         <div class="stat-icon primary"><i class="bi bi-people-fill"></i></div>
                         <div>
                             <div class="stat-value">{{ $totalSiswa }}</div>
-                            <div class="stat-label">Total Siswa</div>
+                            <div class="stat-label">Total Staff</div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-6 col-md-3">
-                <div class="stat-card success">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="stat-icon success"><i class="bi bi-building"></i></div>
-                        <div>
-                            <div class="stat-value">{{ $totalKelas }}</div>
-                            <div class="stat-label">Total Kelas</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
+            <div class="col-6 col-md-4">
                 <div class="stat-card info">
                     <div class="d-flex align-items-center gap-3">
                         <div class="stat-icon info"><i class="bi bi-percent"></i></div>
@@ -45,19 +34,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <a href="{{ route('qrabsen.show') }}" class="text-decoration-none">
-                    <div class="stat-card warning">
-                        <div class="d-flex align-items-center gap-3">
-                            <div class="stat-icon warning"><i class="bi bi-qr-code-scan"></i></div>
-                            <div>
-                                <div class="stat-value" style="font-size:1.2rem;">QR</div>
-                                <div class="stat-label">Tampilkan QR Absen</div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
             </div>
         </div>
     </div>
@@ -92,49 +68,17 @@
 </div>
 
 <div class="row g-4">
-    <div class="col-lg-6">
+    <div class="col-lg-12">
         <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0"><i class="bi bi-building me-2 text-primary"></i>Kehadiran Per Kelas Hari Ini</h5>
-                <a href="{{ route('absensi.index') }}" class="btn btn-sm btn-primary">Input Absensi</a>
-            </div>
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table mb-0">
-                        <thead><tr><th>Kelas</th><th class="text-center">Siswa</th><th class="text-center">Hadir</th><th class="text-center">Persentase</th></tr></thead>
-                        <tbody>
-                            @forelse($kelasWithStats as $kelas)
-                                <tr>
-                                    <td><strong>{{ $kelas->tingkat }} {{ $kelas->nama_kelas }}</strong>@if($kelas->jurusan)<small class="text-muted d-block">{{ $kelas->jurusan }}</small>@endif</td>
-                                    <td class="text-center">{{ $kelas->stats['total'] }}</td>
-                                    <td class="text-center"><span class="badge bg-success">{{ $kelas->stats['hadir'] }}</span></td>
-                                    <td class="text-center">
-                                        @php $persen = $kelas->stats['total'] > 0 ? round(($kelas->stats['hadir'] / $kelas->stats['total']) * 100) : 0; @endphp
-                                        <div class="progress" style="height:6px;"><div class="progress-bar bg-success" style="width:{{ $persen }}%"></div></div>
-                                        <small class="text-muted">{{ $persen }}%</small>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr><td colspan="4" class="text-center text-muted py-4"><i class="bi bi-inbox fs-1 d-block mb-2"></i>Belum ada data kelas</td></tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="card">
-            <div class="card-header"><h5 class="mb-0"><i class="bi bi-clock-history me-2 text-info"></i>Absensi Terbaru</h5></div>
+                <div class="card-header"><h5 class="mb-0"><i class="bi bi-clock-history me-2 text-info"></i>Absensi Terbaru</h5></div>
             <div class="card-body p-0">
                 <div class="table-responsive" style="max-height:400px;overflow-y:auto;">
                     <table class="table mb-0">
-                        <thead style="position:sticky;top:0;background:white;"><tr><th>Siswa</th><th>Kelas</th><th>Status</th><th>Waktu</th></tr></thead>
+                        <thead style="position:sticky;top:0;background:#f1f5f9;"><tr><th>Staff</th><th>Status</th><th>Waktu</th></tr></thead>
                         <tbody>
                             @forelse($absensiTerbaru as $absen)
                                 <tr>
                                     <td>{{ $absen->siswa->nama_lengkap ?? '-' }}</td>
-                                    <td>{{ $absen->kelas->nama_kelas ?? '-' }}</td>
                                     <td>{!! $absen->status_badge !!}</td>
                                     <td><small class="text-muted">{{ $absen->created_at->diffForHumans() }}</small></td>
                                 </tr>

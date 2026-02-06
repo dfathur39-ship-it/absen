@@ -37,7 +37,7 @@
                 <h5 class="card-title mb-1">{{ $k->tingkat }} {{ $k->nama_kelas }}</h5>
                 @if($k->jurusan)<p class="text-muted mb-2">{{ $k->jurusan }}</p>@endif
                 <div class="d-flex gap-3 mb-3">
-                    <div><small class="text-muted d-block">Siswa</small><strong class="text-primary">{{ $k->siswa_count }}</strong></div>
+                    <div><small class="text-muted d-block">Staff</small><strong class="text-primary">{{ $k->siswa_count }}</strong></div>
                     <div><small class="text-muted d-block">Tahun Ajaran</small><strong>{{ $k->tahun_ajaran }}/{{ $k->tahun_ajaran + 1 }}</strong></div>
                 </div>
                 @if($k->wali_kelas)

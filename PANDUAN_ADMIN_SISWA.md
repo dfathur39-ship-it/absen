@@ -1,8 +1,8 @@
-# Panduan Admin: Menambahkan Siswa Baru
+# Panduan Admin: Menambahkan Staff Baru
 
-Sebagai admin, Anda perlu menambahkan data siswa terlebih dahulu sebelum siswa bisa register. Berikut panduannya:
+Sebagai admin, Anda dapat menambahkan data staff terlebih dahulu (opsional). Staff juga bisa register sendiri menggunakan nama + email.
 
-## 📋 Cara Menambahkan Siswa Baru
+## 📋 Cara Menambahkan Staff Baru
 
 ### Langkah-Langkah:
 
@@ -10,81 +10,77 @@ Sebagai admin, Anda perlu menambahkan data siswa terlebih dahulu sebelum siswa b
    - Email: `admin@absensi.test`
    - Password: `password` (atau password yang sudah diubah)
 
-2. **Buka Menu "Data Siswa"**
-   - Klik menu "Data Siswa" di sidebar
+2. **Buka Menu "Data Staff"**
+   - Klik menu "Data Staff" di sidebar
    - Atau akses: `http://absensi-siswa.test/siswa`
 
-3. **Klik "Tambah Siswa"**
+3. **Klik "Tambah Staff"**
    - Tombol biasanya di kanan atas atau di bawah tabel
 
-4. **Isi Form Data Siswa:**
-   - **NIS** (wajib): Nomor Induk Siswa (harus unik)
-     - Contoh: `20240001`, `20240002`, dll
-     - ⚠️ NIS ini yang akan digunakan siswa untuk register
-   - **Nama Lengkap** (wajib): Nama lengkap siswa
+4. **Isi Form Data Staff:**
+   - **ID Staff** (opsional): Kosongkan untuk auto-generate
+   - **Nama Lengkap** (wajib): Nama lengkap staff
    - **Jenis Kelamin**: L (Laki-laki) atau P (Perempuan)
-   - **Tempat Lahir**: Tempat lahir siswa
-   - **Tanggal Lahir**: Tanggal lahir siswa
-   - **Alamat**: Alamat siswa
-   - **No. Telepon**: Nomor telepon siswa
-   - **Email**: Email siswa (opsional)
-   - **Kelas**: Pilih kelas siswa
-   - **Status Aktif**: Centang jika siswa aktif
+   - **Tempat Lahir**: Tempat lahir (opsional)
+   - **Tanggal Lahir**: Tanggal lahir (opsional)
+   - **Alamat**: Alamat (opsional)
+   - **No. Telepon**: Nomor telepon (opsional)
+   - **Email**: Email (opsional)
+   - **Unit/Kelas**: Pilih unit/bagian (wajib)
+   - **Status Aktif**: Centang jika staff aktif
 
 5. **Klik "Simpan"**
    - Data siswa akan tersimpan
    - Siswa sekarang bisa register menggunakan NIS tersebut
 
-## ✅ Setelah Siswa Ditambahkan
+## ✅ Setelah Staff Ditambahkan
 
-Siswa dapat:
+Staff dapat:
 1. Buka halaman register: `http://absensi-siswa.test/register`
-2. Masukkan NIS yang sudah Anda tambahkan
-3. Masukkan email dan password
-4. Register berhasil dan otomatis login
+2. Isi nama, email, jenis kelamin, dan password
+3. Register berhasil dan otomatis login
 
 ## 📝 Tips untuk Admin
 
-### 1. NIS Harus Unik
-- Setiap siswa harus memiliki NIS yang berbeda
-- Sistem akan menolak jika NIS duplikat
+### 1. ID Staff Unik (jika diisi)
+- Jika Anda mengisi ID Staff manual, pastikan unik
+- Jika kosong, sistem akan auto-generate
 
-### 2. Pastikan Kelas Sudah Ada
-- Sebelum menambahkan siswa, pastikan kelas sudah dibuat
+### 2. Pastikan Unit/Kelas Sudah Ada
+- Sebelum menambahkan staff, pastikan unit/kelas sudah dibuat
 - Buka menu "Data Kelas" untuk menambahkan kelas baru
 
 ### 3. Status Aktif
-- Hanya siswa dengan status aktif yang bisa register
-- Nonaktifkan siswa jika sudah lulus atau pindah
+- Nonaktifkan staff jika sudah tidak aktif
 
 ### 4. Batch Import (Manual)
 - Saat ini belum ada fitur import Excel
 - Tambahkan siswa satu per satu atau gunakan seeder untuk data contoh
 
-## 🔍 Cara Melihat Daftar Siswa
+## 🔍 Cara Melihat Daftar Staff
 
-1. Buka menu "Data Siswa"
+1. Buka menu "Data Staff"
 2. Tabel menampilkan:
-   - NIS
+   - ID Staff
    - Nama Lengkap
-   - Kelas
+   - Unit/Kelas
    - Status (Aktif/Tidak Aktif)
    - Aksi (Edit/Hapus)
 
-## ✏️ Edit Data Siswa
+## ✏️ Edit Data Staff
 
 1. Klik tombol "Edit" pada siswa yang ingin diubah
 2. Ubah data yang diperlukan
 3. Klik "Simpan"
 4. Data akan terupdate
 
-## 🗑️ Hapus Siswa
+## 🗑️ Hapus Staff
 
 1. Klik tombol "Hapus" pada siswa yang ingin dihapus
 2. Konfirmasi penghapusan
-3. ⚠️ Hati-hati: Jika siswa sudah memiliki akun, hapus akun terlebih dahulu
+3. ⚠️ Hati-hati: Jika staff sudah memiliki akun, hapus akun terlebih dahulu
 
-## 🔐 Reset Password Siswa
+## 🔐 Reset Password Staff
 
 Jika siswa lupa password, admin bisa reset via database:
 
@@ -98,25 +94,20 @@ Kemudian:
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-$user = User::where('email', 'email_siswa@email.com')->first();
+$user = User::where('email', 'email_staff@email.com')->first();
 $user->password = Hash::make('passwordbaru123');
 $user->save();
 ```
 
 ### Via DBeaver:
 1. Buka tabel `users`
-2. Cari siswa berdasarkan email
+2. Cari staff berdasarkan email
 3. Update kolom `password` dengan hash baru
 4. Generate hash via tinker (lihat di atas)
 
-## 📊 Data Siswa dari Seeder
+## 📊 Data Contoh dari Seeder
 
-Jika sudah menjalankan `php artisan db:seed`, ada 15 siswa contoh:
-- NIS: `20240001` sampai `20240015`
-- Semua siswa sudah memiliki kelas
-- Status: Aktif
-
-Siswa-siswa ini bisa langsung digunakan untuk testing register.
+Jika sudah menjalankan `php artisan db:seed`, data contoh mungkin masih bertuliskan "siswa" (legacy).
 
 ## ⚠️ Catatan Penting
 

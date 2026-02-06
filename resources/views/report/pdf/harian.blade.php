@@ -24,7 +24,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>Absensi Siswa</h1>
+        <h1>Absensi Staff</h1>
         <h2>LAPORAN ABSENSI HARIAN</h2>
     </div>
     <div class="info">
@@ -38,8 +38,8 @@
         <thead>
             <tr>
                 <th width="40">No</th>
-                <th width="80">NIS</th>
-                <th>Nama Siswa</th>
+                <th width="110">ID Staff</th>
+                <th>Nama Staff</th>
                 <th width="40">L/P</th>
                 <th width="80">Status</th>
                 <th>Keterangan</th>

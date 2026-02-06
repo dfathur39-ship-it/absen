@@ -1,17 +1,17 @@
-# Daftar Fitur - Aplikasi Absensi Siswa
+# Daftar Fitur - Aplikasi Absensi Staff
 
 ## ✅ Fitur yang Sudah Diimplementasikan
 
 ### 1. Autentikasi & Authorization
-- ✅ Login untuk Admin dan Siswa
-- ✅ Register hanya untuk Siswa (Admin tidak bisa register)
+- ✅ Login untuk Admin dan Staff
+- ✅ Register untuk Staff (Admin tidak bisa register)
 - ✅ Middleware role-based (CheckRole)
 - ✅ Redirect ke dashboard setelah login
 - ✅ Session management
 
 ### 2. Dashboard
 - ✅ Dashboard Admin dengan statistik lengkap
-- ✅ Dashboard Siswa dengan info personal
+- ✅ Dashboard Staff dengan info personal
 - ✅ Grafik absensi 7 hari terakhir (Admin)
 - ✅ Live clock & tanggal
 - ✅ Statistik real-time
@@ -23,12 +23,10 @@
 - ✅ Edit data siswa (no telepon, alamat) untuk siswa
 - ✅ Tampilan profil dengan avatar
 
-### 4. QR Code Absensi
-- ✅ Admin dapat generate QR code
-- ✅ QR code dengan token unik (expires 5 menit)
-- ✅ Siswa scan QR code menggunakan kamera HP
-- ✅ Auto-record absensi setelah scan
-- ✅ Validasi: hanya siswa yang sudah login bisa scan
+### 4. Absen Staff (Foto + Status)
+- ✅ Staff absen dengan upload foto
+- ✅ Pilih status: hadir / sakit / izin
+- ✅ Jika sakit/izin: wajib keterangan + lampiran PDF
 - ✅ Validasi: tidak bisa absen 2x dalam sehari
 
 ### 5. Manajemen Data (Admin Only)
@@ -57,11 +55,11 @@
 
 ### Controllers
 - `AuthController` - Login, Register, Logout
-- `DashboardController` - Dashboard Admin & Siswa
+- `DashboardController` - Dashboard Admin & Staff
 - `ProfileController` - Edit profil
-- `QrAbsenController` - Generate & scan QR code
+- `StaffAbsenController` - Absen staff (foto + status + pdf)
 - `KelasController` - CRUD Kelas
-- `SiswaController` - CRUD Siswa
+- `SiswaController` - CRUD Staff (masih memakai tabel `siswa`)
 - `AbsensiController` - Input & rekap absensi
 - `ReportController` - Generate laporan PDF
 
@@ -79,13 +77,12 @@
 ### Routes
 - `/` - Redirect ke login
 - `/login` - Halaman login
-- `/register` - Halaman register (siswa only)
-- `/dashboard` - Dashboard (berbeda untuk admin/siswa)
+- `/register` - Halaman register (staff)
+- `/dashboard` - Dashboard (berbeda untuk admin/staff)
 - `/profile` - Profil user
-- `/qrabsen` - Generate QR code (admin)
-- `/absen/scan/{token}` - Scan QR code (siswa)
+- `/absen` - Absen staff (foto + status + pdf)
 - `/kelas` - CRUD Kelas (admin)
-- `/siswa` - CRUD Siswa (admin)
+- `/siswa` - CRUD Staff (admin)
 - `/absensi` - Input absensi (admin)
 - `/report` - Download laporan (admin)
 
@@ -93,7 +90,7 @@
 
 ### users
 - id, name, email, password, role
-- siswa_id, kelas_id (untuk siswa)
+- siswa_id, kelas_id (untuk staff)
 - timestamps
 
 ### kelas
@@ -112,7 +109,7 @@
 - id, siswa_id, kelas_id
 - tanggal, waktu_masuk, waktu_pulang
 - status (hadir/izin/sakit/alpha)
-- keterangan, recorded_by
+- keterangan, foto_bukti, pdf_keterangan, recorded_by
 - timestamps
 - unique: siswa_id + tanggal
 
@@ -124,7 +121,7 @@
 - ✅ XSS protection (Blade escaping)
 - ✅ Role-based access control
 - ✅ Session security
-- ✅ Token expiration untuk QR code
+- ✅ Validasi upload (foto & PDF)
 
 ## Teknologi & Dependencies
 
@@ -132,13 +129,11 @@
 - MySQL/MariaDB
 - Bootstrap 5
 - Chart.js (untuk grafik)
-- QRCode.js (untuk generate QR)
 - DomPDF (untuk generate PDF)
 
 ## Catatan Penting
 
 1. **Admin tidak bisa register** - Admin hanya bisa login dengan akun yang sudah dibuat (via seeder)
-2. **Siswa harus register dengan NIS** - NIS harus sudah terdaftar di database oleh admin
-3. **QR Code expires** - Token QR code berlaku 5 menit
-4. **Satu absensi per hari** - Setiap siswa hanya bisa absen sekali per hari
+2. **Staff register tanpa NIS** - Register menggunakan nama + email
+3. **Satu absensi per hari** - Setiap staff hanya bisa absen sekali per hari
 5. **Role-based access** - Setiap route dilindungi dengan middleware sesuai role

@@ -23,7 +23,7 @@
                     </div>
                     @if($user->isSiswa() && $siswa)
                         <div class="mb-3">
-                            <label class="form-label">NIS</label>
+                            <label class="form-label">ID Staff</label>
                             <input type="text" class="form-control" value="{{ $siswa->nis }}" disabled>
                         </div>
                         <div class="mb-3">
@@ -60,11 +60,10 @@
                     {{ strtoupper(substr($user->name, 0, 2)) }}
                 </div>
                 <h5 class="mb-1">{{ $user->name }}</h5>
-                <p class="text-muted mb-0">{{ ucfirst($user->role) }}</p>
+                <p class="text-muted mb-0">{{ $user->isAdmin() ? 'Admin' : 'Staff' }}</p>
                 @if($user->isSiswa() && $siswa)
                     <hr>
-                    <p class="mb-1"><strong>NIS:</strong> {{ $siswa->nis }}</p>
-                    <p class="mb-0"><strong>Kelas:</strong> {{ $siswa->kelas->tingkat ?? '' }} {{ $siswa->kelas->nama_kelas ?? '' }}</p>
+                    <p class="mb-1"><strong>ID Staff:</strong> {{ $siswa->nis }}</p>
                 @endif
             </div>
         </div>

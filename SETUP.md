@@ -1,4 +1,4 @@
-# Panduan Setup Cepat - Absensi Siswa
+# Panduan Setup Cepat - Absensi Staff
 
 ## Langkah-Langkah Setup (Laragon + DBeaver)
 
@@ -21,7 +21,7 @@
 2. Copy `.env.example` menjadi `.env`
 3. Edit `.env`:
    ```env
-   APP_NAME="Absensi Siswa"
+   APP_NAME="Absensi Staff"
    APP_URL=http://absensi-siswa.test
    
    DB_CONNECTION=mysql
@@ -57,19 +57,19 @@ php artisan db:seed
 - Email: `admin@absensi.test`
 - Password: `password`
 
-**Siswa:**
-- Register dengan NIS: `20240001` (atau NIS lain dari seeder)
-- Email: bebas (contoh: `siswa1@email.com`)
+**Staff:**
+- Register dengan nama + email (tanpa NIS)
+- Email: bebas (contoh: `staff1@email.com`)
 - Password: minimal 8 karakter
 
 ## Fitur yang Tersedia
 
-✅ Login untuk Admin & Siswa  
-✅ Register hanya untuk Siswa (Admin tidak bisa register)  
-✅ Dashboard berbeda untuk Admin & Siswa  
+✅ Login untuk Admin & Staff  
+✅ Register untuk Staff (Admin tidak bisa register)  
+✅ Dashboard berbeda untuk Admin & Staff  
 ✅ Profil data (edit nama, email, password)  
-✅ QR Code absensi (Admin generate, Siswa scan)  
-✅ Manajemen Kelas & Siswa (Admin only)  
+✅ Absen Staff (upload foto + status + PDF untuk sakit/izin)  
+✅ Manajemen Kelas & Staff (Admin only)  
 ✅ Input absensi manual (Admin)  
 ✅ Rekap & Laporan PDF  
 
@@ -86,12 +86,10 @@ php artisan config:clear
 php artisan view:clear
 ```
 
-**QR Code tidak muncul:**
-- Pastikan koneksi internet aktif (menggunakan CDN)
+Bagian QR sudah tidak digunakan (fitur QR dihapus).
 
 ## Catatan Penting
 
 - Admin **TIDAK BISA** register dari halaman register
-- Siswa **HARUS** register dengan NIS yang sudah terdaftar di database
-- QR Code berlaku 5 menit setelah di-generate
-- Siswa harus login terlebih dahulu sebelum scan QR
+- Staff register menggunakan nama + email
+- Jika sakit/izin: wajib keterangan + lampiran PDF

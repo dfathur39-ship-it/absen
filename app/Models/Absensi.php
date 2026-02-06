@@ -19,6 +19,8 @@ class Absensi extends Model
         'waktu_pulang',
         'status',
         'keterangan',
+        'foto_bukti',
+        'pdf_keterangan',
         'recorded_by',
     ];
 

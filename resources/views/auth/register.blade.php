@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar - Absensi Siswa</title>
+    <title>Daftar - Absensi Staff</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -31,8 +31,8 @@
     <div class="register-container">
         <div class="register-card">
             <div class="brand-logo"><i class="bi bi-person-plus-fill"></i></div>
-            <h1 class="brand-title">Daftar Akun Siswa</h1>
-            <p class="brand-subtitle">Gunakan NIS yang sudah terdaftar di sekolah. Admin tidak bisa mendaftar dari sini.</p>
+            <h1 class="brand-title">Daftar Akun Staff</h1>
+            <p class="brand-subtitle">Daftar menggunakan nama & email. Admin tidak bisa mendaftar dari sini.</p>
             @if($errors->any())
                 <div class="alert alert-danger">
                     <ul class="mb-0">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
@@ -41,13 +41,20 @@
             <form action="{{ route('register') }}" method="POST">
                 @csrf
                 <div class="mb-3">
-                    <label class="form-label">NIS</label>
-                    <input type="text" name="nis" class="form-control" placeholder="Nomor Induk Siswa" value="{{ old('nis') }}" required>
-                    <small class="text-muted">NIS harus sudah didaftarkan admin di Data Siswa</small>
+                    <label class="form-label">Nama Lengkap</label>
+                    <input type="text" name="name" class="form-control" placeholder="Nama lengkap" value="{{ old('name') }}" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Email</label>
                     <input type="email" name="email" class="form-control" placeholder="nama@email.com" value="{{ old('email') }}" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Jenis Kelamin</label>
+                    <select name="jenis_kelamin" class="form-select" required>
+                        <option value="">-- Pilih --</option>
+                        <option value="L" @selected(old('jenis_kelamin')==='L')>Laki-laki</option>
+                        <option value="P" @selected(old('jenis_kelamin')==='P')>Perempuan</option>
+                    </select>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">

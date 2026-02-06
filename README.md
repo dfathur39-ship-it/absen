@@ -1,31 +1,31 @@
-# Aplikasi Absensi Siswa
+# Aplikasi Absensi Staff
 
-Aplikasi web absensi siswa berbasis Laravel dengan fitur QR Code scanning untuk pencatatan kehadiran.
+Aplikasi web absensi staff berbasis Laravel dengan absen menggunakan upload foto + status (hadir/sakit/izin) serta lampiran PDF untuk sakit/izin.
 
 ## Fitur Utama
 
 ✅ **Autentikasi Multi-Role**
 - Admin dapat login (tidak bisa register)
-- Siswa dapat login dan register menggunakan NIS
+- Staff dapat login dan register menggunakan nama + email (tanpa NIS)
 
 ✅ **Dashboard**
-- Dashboard berbeda untuk Admin dan Siswa
+- Dashboard berbeda untuk Admin dan Staff
 - Statistik real-time absensi
 - Grafik absensi 7 hari terakhir (Admin)
 
 ✅ **Profil Data**
 - Edit profil pengguna
 - Update password
-- Data siswa lengkap (untuk siswa)
+- Data staff (untuk staff)
 
-✅ **QR Code Absensi**
-- Admin dapat generate QR code untuk absensi
-- Siswa scan QR code menggunakan kamera HP
-- Token QR berlaku 5 menit
+✅ **Absen Staff**
+- Staff absen dengan upload foto
+- Pilih status: hadir / sakit / izin
+- Jika sakit/izin: wajib keterangan + lampiran PDF
 
 ✅ **Manajemen Data**
 - CRUD Kelas (Admin only)
-- CRUD Siswa (Admin only)
+- CRUD Staff (Admin only)
 - Input absensi manual (Admin)
 - Rekap absensi bulanan & tahunan
 
@@ -36,7 +36,7 @@ Aplikasi web absensi siswa berbasis Laravel dengan fitur QR Code scanning untuk 
 
 - **Backend**: Laravel 10.x
 - **Database**: MySQL (via Laragon)
-- **Frontend**: Bootstrap 5, Chart.js, QRCode.js
+- **Frontend**: Bootstrap 5, Chart.js
 - **Server**: Laragon (Apache/Nginx + PHP + MySQL)
 
 ## Persyaratan Sistem
@@ -158,9 +158,8 @@ Setelah menjalankan seeder, gunakan kredensial berikut:
 - **Email**: `admin@absensi.test`
 - **Password**: `password`
 
-### Siswa
-- **NIS**: `20240001` sampai `20240015` (contoh dari seeder)
-- Siswa dapat register dengan NIS yang sudah terdaftar di database
+### Staff
+- Staff dapat register menggunakan nama + email (tanpa NIS)
 
 ## Cara Menggunakan
 
@@ -172,44 +171,36 @@ Setelah menjalankan seeder, gunakan kredensial berikut:
    - Masukkan password: `password`
    - Setelah login, akan redirect ke dashboard admin
 
-2. **Generate QR Code Absensi**
-   - Klik menu "Tampilkan QR Absen"
-   - QR code akan muncul di layar
-   - Siswa scan QR code ini menggunakan kamera HP
-   - QR code berlaku 5 menit
-
-3. **Input Absensi Manual**
+2. **Input Absensi Manual (Admin)**
    - Klik menu "Absensi Harian"
-   - Pilih kelas dan siswa
+   - Pilih kelas dan staff
    - Input status absensi (Hadir/Izin/Sakit/Alpha)
 
-4. **Manajemen Data**
+3. **Manajemen Data**
    - **Kelas**: Tambah/edit/hapus kelas
-   - **Siswa**: Tambah/edit/hapus siswa
-   - Pastikan siswa memiliki NIS yang valid untuk register
+   - **Staff**: Tambah/edit/hapus staff
 
-5. **Laporan**
+4. **Laporan**
    - Klik menu "Download Report"
    - Pilih periode (Harian/Bulanan/Tahunan)
    - Download PDF
 
-### Untuk Siswa
+### Untuk Staff
 
 1. **Register**
    - Klik "Daftar di sini" di halaman login
-   - Masukkan NIS yang sudah terdaftar di database
-   - Masukkan email dan password
+   - Isi nama, email, jenis kelamin, dan password
    - Setelah register, otomatis login ke dashboard
 
 2. **Login**
    - Masukkan email dan password yang sudah didaftarkan
-   - Setelah login, akan redirect ke dashboard siswa
+   - Setelah login, akan redirect ke dashboard staff
 
-3. **Absensi via QR Code**
+3. **Absen (Foto + Status)**
    - Pastikan sudah login
-   - Buka kamera HP
-   - Scan QR code yang ditampilkan admin/guru
-   - Setelah scan, otomatis tercatat hadir
+   - Buka menu **Absen (Foto)**
+   - Upload foto dan pilih status hadir/sakit/izin
+   - Jika sakit/izin: isi keterangan + lampirkan PDF
 
 4. **Lihat Profil**
    - Klik menu "Profil"
@@ -220,7 +211,7 @@ Setelah menjalankan seeder, gunakan kredensial berikut:
 
 ### Tabel `users`
 - `id`, `name`, `email`, `password`, `role` (admin/siswa)
-- `siswa_id`, `kelas_id` (untuk siswa)
+- `siswa_id`, `kelas_id` (untuk staff)
 
 ### Tabel `kelas`
 - `id`, `nama_kelas`, `tingkat`, `jurusan`, `wali_kelas`, `tahun_ajaran`
@@ -241,8 +232,7 @@ Setelah menjalankan seeder, gunakan kredensial berikut:
 - Jalankan: `php artisan key:generate`
 
 ### QR Code tidak muncul
-- Pastikan koneksi internet aktif (menggunakan CDN)
-- Atau install package QRCode lokal
+Bagian ini sudah tidak digunakan karena fitur QR dihapus.
 
 ### Halaman blank setelah login
 - Clear cache: `php artisan cache:clear`
@@ -254,12 +244,11 @@ Setelah menjalankan seeder, gunakan kredensial berikut:
 
 ## Development
 
-### Menambah Data Siswa Baru
+### Menambah Data Staff Baru
 
 1. Login sebagai admin
-2. Menu: Data Siswa → Tambah Siswa
-3. Isi form (NIS harus unique)
-4. Siswa dapat register menggunakan NIS tersebut
+2. Menu: Data Staff → Tambah Staff
+3. Isi form (ID Staff bisa dikosongkan untuk auto-generate)
 
 ### Menambah Kelas Baru
 

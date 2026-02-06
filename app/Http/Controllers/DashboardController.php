@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\Absensi;
 use App\Models\User;
@@ -29,7 +28,6 @@ class DashboardController extends Controller
     protected function dashboardAdmin($today, $currentMonth, $currentYear)
     {
         $totalSiswa = Siswa::where('is_active', true)->count();
-        $totalKelas = Kelas::where('is_active', true)->count();
 
         $absensiHariIni = Absensi::whereDate('tanggal', $today)->get();
         $statsHariIni = [
@@ -67,33 +65,17 @@ class DashboardController extends Controller
             ];
         }
 
-        $kelasWithStats = Kelas::where('is_active', true)
-            ->withCount('siswa')
-            ->get()
-            ->map(function ($kelas) use ($today) {
-                $absensiHariIni = Absensi::where('kelas_id', $kelas->id)
-                    ->whereDate('tanggal', $today)
-                    ->get();
-                $kelas->stats = [
-                    'hadir' => $absensiHariIni->where('status', 'hadir')->count(),
-                    'total' => $kelas->siswa_count,
-                ];
-                return $kelas;
-            });
-
-        $absensiTerbaru = Absensi::with(['siswa', 'kelas'])
+        $absensiTerbaru = Absensi::with(['siswa'])
             ->orderBy('created_at', 'desc')
             ->limit(10)
             ->get();
 
         return view('dashboard.admin', compact(
             'totalSiswa',
-            'totalKelas',
             'statsHariIni',
             'statsBulanIni',
             'persentaseHadir',
             'chartData',
-            'kelasWithStats',
             'absensiTerbaru',
             'today'
         ));

@@ -7,15 +7,6 @@
     <div class="card-body">
         <form action="{{ route('absensi.index') }}" method="GET" class="row g-3 align-items-end">
             <div class="col-md-4">
-                <label class="form-label fw-semibold">Pilih Kelas</label>
-                <select name="kelas_id" class="form-select" required>
-                    <option value="">-- Pilih Kelas --</option>
-                    @foreach($kelas as $k)
-                        <option value="{{ $k->id }}" {{ $selectedKelas == $k->id ? 'selected' : '' }}>{{ $k->tingkat }} {{ $k->nama_kelas }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-3">
                 <label class="form-label fw-semibold">Tanggal</label>
                 <input type="date" name="tanggal" class="form-control" value="{{ $selectedDate }}" required>
             </div>
@@ -26,10 +17,9 @@
     </div>
 </div>
 
-@if($selectedKelas && $siswaList->isNotEmpty())
+@if($siswaList->isNotEmpty())
 <form action="{{ route('absensi.store') }}" method="POST">
     @csrf
-    <input type="hidden" name="kelas_id" value="{{ $selectedKelas }}">
     <input type="hidden" name="tanggal" value="{{ $selectedDate }}">
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
@@ -42,8 +32,8 @@
                     <thead>
                         <tr>
                             <th width="50">No</th>
-                            <th>NIS</th>
-                            <th>Nama Siswa</th>
+                            <th>ID Staff</th>
+                            <th>Nama Staff</th>
                             <th width="120">Status</th>
                             <th>Keterangan</th>
                         </tr>
@@ -75,11 +65,11 @@
         </div>
     </div>
 </form>
-@elseif($selectedKelas)
+@else
 <div class="card">
     <div class="card-body text-center py-5 text-muted">
         <i class="bi bi-people fs-1 d-block mb-2"></i>
-        Tidak ada siswa di kelas ini atau kelas belum dipilih.
+        Tidak ada staff aktif atau belum ada data untuk tanggal ini.
     </div>
 </div>
 @endif

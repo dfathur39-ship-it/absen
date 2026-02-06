@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Siswa')
+@section('title', 'Edit Staff')
 
 @section('content')
 <div class="row justify-content-center">
     <div class="col-lg-10">
         <div class="card">
-            <div class="card-header"><h5 class="mb-0"><i class="bi bi-pencil-square me-2 text-warning"></i>Edit Data Siswa</h5></div>
+            <div class="card-header"><h5 class="mb-0"><i class="bi bi-pencil-square me-2 text-warning"></i>Edit Data Staff</h5></div>
             <div class="card-body">
                 <form action="{{ route('siswa.update', $siswa) }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -15,8 +15,8 @@
                         <div class="col-md-6">
                             <h6 class="mb-3 text-primary">Data Utama</h6>
                             <div class="mb-3">
-                                <label class="form-label fw-semibold">NIS <span class="text-danger">*</span></label>
-                                <input type="text" name="nis" class="form-control @error('nis') is-invalid @enderror" value="{{ old('nis', $siswa->nis) }}" required>
+                                <label class="form-label fw-semibold">ID Staff</label>
+                                <input type="text" name="nis" class="form-control @error('nis') is-invalid @enderror" value="{{ old('nis', $siswa->nis) }}">
                                 @error('nis')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="mb-3">
@@ -33,7 +33,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-semibold">Kelas <span class="text-danger">*</span></label>
+                                    <label class="form-label fw-semibold">Unit <span class="text-danger">*</span></label>
                                     <select name="kelas_id" class="form-select" required>
                                         @foreach($kelas as $k)
                                             <option value="{{ $k->id }}" {{ old('kelas_id', $siswa->kelas_id) == $k->id ? 'selected' : '' }}>{{ $k->tingkat }} {{ $k->nama_kelas }}</option>
@@ -53,7 +53,7 @@
                             </div>
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" name="is_active" value="1" {{ old('is_active', $siswa->is_active) ? 'checked' : '' }}>
-                                <label class="form-check-label">Siswa Aktif</label>
+                                <label class="form-check-label">Staff Aktif</label>
                             </div>
                         </div>
                         <div class="col-md-6">

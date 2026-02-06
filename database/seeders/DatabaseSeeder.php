@@ -15,53 +15,61 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Admin (hanya bisa login, tidak bisa register)
-        User::create([
-            'name' => 'Administrator',
-            'email' => 'admin@absensi.test',
-            'password' => Hash::make('password'),
-            'role' => 'admin',
-        ]);
+        User::firstOrCreate(
+            ['email' => 'admin@absensi.test'],
+            [
+                'name' => 'Administrator',
+                'password' => Hash::make('password'),
+                'role' => 'admin',
+            ]
+        );
 
-        // Kelas contoh
+        // Kelas contoh (opsional, untuk backward compatibility)
         $kelasData = [
-            ['nama_kelas' => 'A', 'tingkat' => 'X', 'jurusan' => 'IPA', 'wali_kelas' => 'Budi Santoso, S.Pd', 'tahun_ajaran' => 2024],
-            ['nama_kelas' => 'B', 'tingkat' => 'X', 'jurusan' => 'IPA', 'wali_kelas' => 'Siti Aminah, S.Pd', 'tahun_ajaran' => 2024],
-            ['nama_kelas' => 'A', 'tingkat' => 'XI', 'jurusan' => 'IPA', 'wali_kelas' => 'Ahmad Yani, S.Pd', 'tahun_ajaran' => 2024],
+            ['nama_kelas' => 'STAFF', 'tingkat' => 'STAFF', 'jurusan' => null, 'wali_kelas' => null, 'tahun_ajaran' => now()->year],
         ];
 
         foreach ($kelasData as $k) {
-            Kelas::create($k);
+            Kelas::firstOrCreate(
+                ['nama_kelas' => $k['nama_kelas'], 'tingkat' => $k['tingkat']],
+                $k
+            );
         }
 
-        // Siswa contoh (NIS untuk register siswa)
+        // Staff contoh (opsional, untuk testing)
         $namaLaki = ['Ahmad', 'Budi', 'Cahyo', 'Dani', 'Eko'];
         $namaPerempuan = ['Anisa', 'Bella', 'Citra', 'Dina', 'Eka'];
         $namaBelakang = ['Pratama', 'Saputra', 'Wijaya', 'Kusuma', 'Santoso'];
 
-        $siswaId = 1;
-        foreach (Kelas::all() as $kelas) {
+        $staffId = 1;
+        $kelasStaff = Kelas::where('nama_kelas', 'STAFF')->first();
+        if ($kelasStaff) {
             for ($i = 0; $i < 5; $i++) {
                 $isLaki = $i < 3;
                 $namaDepan = $isLaki ? $namaLaki[array_rand($namaLaki)] : $namaPerempuan[array_rand($namaPerempuan)];
                 $nama = $namaDepan . ' ' . $namaBelakang[array_rand($namaBelakang)];
+                $nis = 'STF-' . now()->format('Ymd') . '-' . str_pad($staffId, 3, '0', STR_PAD_LEFT);
 
-                Siswa::create([
-                    'nis' => '2024' . str_pad($siswaId, 4, '0', STR_PAD_LEFT),
-                    'nama_lengkap' => $nama,
-                    'jenis_kelamin' => $isLaki ? 'L' : 'P',
-                    'tempat_lahir' => 'Jakarta',
-                    'tanggal_lahir' => Carbon::now()->subYears(rand(15, 17)),
-                    'alamat' => 'Jl. Contoh No. ' . rand(1, 50),
-                    'no_telepon' => '08' . rand(100000000, 999999999),
-                    'kelas_id' => $kelas->id,
-                    'is_active' => true,
-                ]);
-                $siswaId++;
+                Siswa::firstOrCreate(
+                    ['nis' => $nis],
+                    [
+                        'nama_lengkap' => $nama,
+                        'jenis_kelamin' => $isLaki ? 'L' : 'P',
+                        'tempat_lahir' => 'Jakarta',
+                        'tanggal_lahir' => Carbon::now()->subYears(rand(25, 40)),
+                        'alamat' => 'Jl. Contoh No. ' . rand(1, 50),
+                        'no_telepon' => '08' . rand(100000000, 999999999),
+                        'kelas_id' => $kelasStaff->id,
+                        'is_active' => true,
+                    ]
+                );
+                $staffId++;
             }
         }
 
-        $this->command->info('Database seeded!');
-        $this->command->info('Admin login: admin@absensi.test / password');
-        $this->command->info('Siswa dapat register dengan NIS (contoh: 20240001) lalu login.');
+        $this->command->info('✅ Database seeded successfully!');
+        $this->command->info('📧 Admin login: admin@absensi.test');
+        $this->command->info('🔑 Password: password');
+        $this->command->info('👥 Staff dapat register menggunakan nama + email di halaman register.');
     }
 }

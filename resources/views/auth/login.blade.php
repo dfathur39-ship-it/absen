@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Absensi Siswa</title>
+    <title>Login - Absensi Staff</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -34,9 +34,9 @@
 <body>
     <div class="login-container">
         <div class="login-card">
-            <div class="brand-logo"><i class="bi bi-mortarboard-fill"></i></div>
-            <h1 class="brand-title">Absensi Siswa</h1>
-            <p class="brand-subtitle">Login untuk Admin atau Siswa</p>
+            <div class="brand-logo"><i class="bi bi-briefcase-fill"></i></div>
+            <h1 class="brand-title">Absensi Staff</h1>
+            <p class="brand-subtitle">Login untuk Admin atau Staff</p>
             @if($errors->any())
                 <div class="alert alert-danger"><i class="bi bi-exclamation-circle me-2"></i>{{ $errors->first() }}</div>
             @endif
@@ -66,7 +66,7 @@
                 <button type="submit" class="btn btn-login"><i class="bi bi-box-arrow-in-right me-2"></i>Masuk</button>
             </form>
             <div class="divider">atau</div>
-            <p class="register-link">Siswa belum punya akun? <a href="{{ route('register') }}">Daftar di sini</a></p>
+            <p class="register-link">Staff belum punya akun? <a href="{{ route('register') }}">Daftar di sini</a></p>
         </div>
     </div>
 </body>

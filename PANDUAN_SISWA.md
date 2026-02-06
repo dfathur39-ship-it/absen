@@ -1,10 +1,10 @@
-# Panduan Lengkap untuk Siswa - Aplikasi Absensi Siswa
+# Panduan Lengkap untuk Staff - Aplikasi Absensi Staff
 
 ## 📋 Daftar Isi
 1. [Cara Register Akun](#cara-register-akun)
 2. [Cara Login](#cara-login)
-3. [Dashboard Siswa](#dashboard-siswa)
-4. [Cara Absensi via QR Code](#cara-absensi-via-qr-code)
+3. [Dashboard Staff](#dashboard-staff)
+4. [Cara Absen (Foto + Status)](#cara-absen-foto--status)
 5. [Edit Profil](#edit-profil)
 6. [Troubleshooting](#troubleshooting)
 
@@ -13,7 +13,6 @@
 ## 1. Cara Register Akun
 
 ### Syarat Register:
-- ✅ NIS harus sudah terdaftar di database oleh admin
 - ✅ Email belum pernah digunakan
 - ✅ Password minimal 8 karakter
 
@@ -24,14 +23,13 @@
    - Atau klik "Daftar di sini" di halaman login
 
 2. **Isi form register:**
-   - **NIS**: Masukkan Nomor Induk Siswa yang sudah terdaftar
-     - Contoh: `20240001`, `20240002`, dll
-     - NIS harus sudah ditambahkan admin di menu "Data Siswa"
+   - **Nama**: Isi nama lengkap staff
    - **Email**: Masukkan email yang valid
-     - Contoh: `siswa1@email.com`, `nama.siswa@gmail.com`
+     - Contoh: `staff1@email.com`, `nama.staff@gmail.com`
      - Email harus unik (belum pernah digunakan)
+   - **Jenis kelamin**: L / P
    - **Password**: Minimal 8 karakter
-     - Contoh: `password123`, `siswa2024`, dll
+     - Contoh: `password123`, `staff2026`, dll
    - **Konfirmasi Password**: Ketik ulang password yang sama
 
 3. **Klik "Daftar Sekarang"**
@@ -39,9 +37,7 @@
    - Redirect ke dashboard siswa
 
 ### Catatan Penting:
-- ⚠️ **Admin tidak bisa register** - Hanya siswa yang bisa register
-- ⚠️ Jika NIS tidak ditemukan, hubungi admin untuk menambahkan data siswa terlebih dahulu
-- ⚠️ Jika NIS sudah memiliki akun, tidak bisa register lagi
+- ⚠️ **Admin tidak bisa register** - Hanya staff yang bisa register
 
 ---
 
@@ -59,7 +55,7 @@
    - **Ingat saya** (opsional): Centang jika ingin tetap login
 
 3. **Klik "Masuk"**
-   - Jika berhasil, redirect ke dashboard siswa
+   - Jika berhasil, redirect ke dashboard staff
    - Jika gagal, cek email dan password
 
 ### Lupa Password?
@@ -69,13 +65,13 @@
 
 ---
 
-## 3. Dashboard Siswa
+## 3. Dashboard Staff
 
 Setelah login, Anda akan melihat dashboard dengan informasi:
 
 ### Informasi Personal:
-- **NIS**: Nomor Induk Siswa Anda
-- **Kelas**: Kelas Anda saat ini
+- **Email**: Email akun Anda
+- **Unit**: Unit/bagian Anda saat ini
 - **Status Absen Hari Ini**: Hadir/Izin/Sakit/Alpha
 
 ### Rekap Bulan Ini:
@@ -88,52 +84,35 @@ Setelah login, Anda akan melihat dashboard dengan informasi:
 - Tabel menampilkan 15 absensi terbaru
 - Menampilkan: Tanggal, Status, Waktu Masuk
 
-### Informasi QR Code:
-- Panduan cara scan QR code untuk absen
-- Pastikan sudah login sebelum scan
+### Informasi Absen:
+- Tombol menuju halaman absen (upload foto)
+- Jika sakit/izin wajib keterangan + PDF
 
 ---
 
-## 4. Cara Absensi via QR Code
+## 4. Cara Absen (Foto + Status)
 
 ### Langkah-Langkah:
 
 1. **Pastikan sudah login**
    - Login ke aplikasi menggunakan HP atau laptop
-   - Buka dashboard siswa
+   - Buka dashboard staff
 
-2. **Admin/Guru menampilkan QR Code**
-   - Admin/guru akan membuka menu "Tampilkan QR Absen"
-   - QR code akan muncul di layar proyektor/laptop
+2. **Buka halaman absen**
+   - Klik menu **Absen (Foto)** di sidebar
 
-3. **Scan QR Code menggunakan HP:**
-   - **Opsi A: Scan langsung dari HP**
-     - Buka kamera HP
-     - Arahkan ke QR code di layar
-     - Klik notifikasi yang muncul
-     - Otomatis redirect ke aplikasi dan absen tercatat
-   
-   - **Opsi B: Scan via browser**
-     - Buka browser di HP
-     - Login ke aplikasi
-     - Scan QR code menggunakan kamera HP
-     - Atau copy URL dari QR code dan buka di browser
+3. **Isi form absen**
+   - Upload **foto**
+   - Pilih status **hadir/sakit/izin**
+   - Jika **sakit/izin**: isi **keterangan** + upload **PDF**
 
-4. **Konfirmasi absensi**
-   - Setelah scan, akan muncul pesan sukses
-   - Status absen hari ini akan berubah menjadi "Hadir"
-   - Waktu masuk tercatat otomatis
+4. **Simpan**
+   - Setelah disimpan, akan muncul pesan sukses
+   - Status absen hari ini akan ter-update
 
 ### Catatan Penting:
-- ⚠️ **QR Code berlaku 5 menit** - Scan segera setelah QR code ditampilkan
 - ⚠️ **Hanya bisa absen sekali per hari** - Jika sudah absen, tidak bisa absen lagi
-- ⚠️ **Harus sudah login** - Pastikan sudah login sebelum scan
-- ⚠️ **Hanya siswa yang bisa absen** - Admin tidak bisa absen via QR
-
-### Troubleshooting QR Code:
-- **QR Code tidak bisa di-scan**: Pastikan QR code masih berlaku (belum 5 menit)
-- **Sudah absen hari ini**: Tidak bisa absen 2x dalam sehari
-- **Tidak redirect**: Pastikan sudah login dan koneksi internet aktif
+- ⚠️ **Harus sudah login** - Pastikan sudah login sebelum absen
 
 ---
 
@@ -172,9 +151,7 @@ Setelah login, Anda akan melihat dashboard dengan informasi:
 
 ### Masalah: NIS tidak ditemukan saat register
 **Solusi:**
-- Pastikan NIS sudah ditambahkan admin di menu "Data Siswa"
-- Hubungi admin untuk menambahkan data siswa Anda
-- Pastikan NIS yang dimasukkan benar (tanpa spasi)
+- Abaikan: register staff tidak membutuhkan NIS
 
 ### Masalah: Email sudah terdaftar
 **Solusi:**
@@ -188,24 +165,15 @@ Setelah login, Anda akan melihat dashboard dengan informasi:
 - Pastikan sudah register terlebih dahulu
 - Hubungi admin jika masih tidak bisa
 
-### Masalah: QR Code tidak bisa di-scan
-**Solusi:**
-- Pastikan QR code masih berlaku (belum 5 menit)
-- Pastikan sudah login sebelum scan
-- Pastikan koneksi internet aktif
-- Coba refresh halaman
-
 ### Masalah: Sudah absen tapi tidak tercatat
 **Solusi:**
 - Refresh dashboard untuk melihat update terbaru
 - Cek di menu "Riwayat Absensi Terbaru"
 - Hubungi admin jika masih tidak muncul
 
-### Masalah: Data siswa tidak ditemukan di dashboard
+### Masalah: Data staff tidak ditemukan di dashboard
 **Solusi:**
-- Pastikan NIS sudah terdaftar dengan benar
-- Hubungi admin untuk memastikan data siswa lengkap
-- Pastikan siswa memiliki kelas yang aktif
+- Hubungi admin untuk memastikan data staff lengkap
 
 ---
 
@@ -220,12 +188,10 @@ Jika mengalami masalah yang tidak bisa diselesaikan:
 
 ## ✅ Checklist Sebelum Menggunakan Aplikasi
 
-- [ ] NIS sudah terdaftar di database (cek dengan admin)
 - [ ] Sudah register dengan email dan password
 - [ ] Sudah login ke aplikasi
-- [ ] Memahami cara scan QR code
 - [ ] Memahami bahwa hanya bisa absen sekali per hari
 
 ---
 
-**Selamat menggunakan aplikasi absensi siswa!** 🎓
+**Selamat menggunakan aplikasi absensi staff!**

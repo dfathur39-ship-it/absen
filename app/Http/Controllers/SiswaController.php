@@ -39,7 +39,7 @@ class SiswaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nis' => 'required|unique:siswa,nis',
+            'nis' => 'nullable|unique:siswa,nis',
             'nama_lengkap' => 'required|string|max:255',
             'jenis_kelamin' => 'required|in:L,P',
             'kelas_id' => 'required|exists:kelas,id',
@@ -52,6 +52,9 @@ class SiswaController extends Controller
         ]);
 
         $data = $request->except('foto');
+        if (empty($data['nis'])) {
+            $data['nis'] = 'STF-' . now()->format('YmdHis') . '-' . random_int(100, 999);
+        }
 
         if ($request->hasFile('foto')) {
             $data['foto'] = $request->file('foto')->store('siswa', 'public');
@@ -59,7 +62,7 @@ class SiswaController extends Controller
 
         Siswa::create($data);
 
-        return redirect()->route('siswa.index')->with('success', 'Siswa berhasil ditambahkan!');
+        return redirect()->route('siswa.index')->with('success', 'Staff berhasil ditambahkan!');
     }
 
     public function edit(Siswa $siswa)
@@ -71,7 +74,7 @@ class SiswaController extends Controller
     public function update(Request $request, Siswa $siswa)
     {
         $request->validate([
-            'nis' => 'required|unique:siswa,nis,' . $siswa->id,
+            'nis' => 'nullable|unique:siswa,nis,' . $siswa->id,
             'nama_lengkap' => 'required|string|max:255',
             'jenis_kelamin' => 'required|in:L,P',
             'kelas_id' => 'required|exists:kelas,id',
@@ -84,6 +87,9 @@ class SiswaController extends Controller
         ]);
 
         $data = $request->except('foto');
+        if (empty($data['nis'])) {
+            $data['nis'] = $siswa->nis;
+        }
 
         if ($request->hasFile('foto')) {
             if ($siswa->foto) {
@@ -94,7 +100,7 @@ class SiswaController extends Controller
 
         $siswa->update($data);
 
-        return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil diupdate!');
+        return redirect()->route('siswa.index')->with('success', 'Data staff berhasil diupdate!');
     }
 
     public function destroy(Siswa $siswa)
@@ -103,7 +109,7 @@ class SiswaController extends Controller
             Storage::disk('public')->delete($siswa->foto);
         }
         $siswa->delete();
-        return redirect()->route('siswa.index')->with('success', 'Siswa berhasil dihapus!');
+        return redirect()->route('siswa.index')->with('success', 'Staff berhasil dihapus!');
     }
 
     public function show(Siswa $siswa)

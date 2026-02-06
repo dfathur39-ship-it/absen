@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Dashboard') - Absensi Siswa</title>
+    <title>@yield('title', 'Dashboard') - Absensi Staff</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -47,6 +47,7 @@
         .main-content { margin-left: 280px; min-height: 100vh; }
         .top-navbar {
             background: white; padding: 1rem 2rem; box-shadow: var(--card-shadow);
+            padding: 1rem 2rem; box-shadow: var(--card-shadow);
             position: sticky; top: 0; z-index: 999; display: flex; justify-content: space-between; align-items: center;
         }
         .navbar-title { font-size: 1.5rem; font-weight: 700; color: var(--dark-color); margin: 0; }
@@ -98,9 +99,9 @@
         <div class="sidebar-header">
             <a href="{{ route('dashboard') }}" class="sidebar-brand">
                 <div style="width: 45px; height: 45px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                    <i class="bi bi-mortarboard-fill" style="font-size: 1.5rem; color: var(--primary-color);"></i>
+                    <i class="bi bi-briefcase-fill" style="font-size: 1.5rem; color: var(--primary-color);"></i>
                 </div>
-                <span>Absensi Siswa</span>
+                <span>Absensi Staff</span>
             </a>
         </div>
         <div class="sidebar-menu">
@@ -112,11 +113,6 @@
                     </a>
                 </li>
                 @if(Auth::user()->isAdmin())
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('qrabsen.*') ? 'active' : '' }}" href="{{ route('qrabsen.show') }}">
-                            <i class="bi bi-qr-code-scan"></i> Tampilkan QR Absen
-                        </a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('absensi.*') ? 'active' : '' }}" href="{{ route('absensi.index') }}">
                             <i class="bi bi-calendar-check-fill"></i> Absensi Harian
@@ -134,13 +130,8 @@
                     </li>
                     <div class="menu-label">Master Data</div>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('kelas.*') ? 'active' : '' }}" href="{{ route('kelas.index') }}">
-                            <i class="bi bi-building"></i> Data Kelas
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('siswa.*') ? 'active' : '' }}" href="{{ route('siswa.index') }}">
-                            <i class="bi bi-people-fill"></i> Data Siswa
+                            <i class="bi bi-people-fill"></i> Data Staff
                         </a>
                     </li>
                     <div class="menu-label">Laporan</div>
@@ -151,8 +142,8 @@
                     </li>
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('dashboard') }}#absen-info">
-                            <i class="bi bi-qr-code-scan"></i> Scan QR untuk Absen
+                        <a class="nav-link {{ request()->routeIs('staff.absen.*') ? 'active' : '' }}" href="{{ route('staff.absen.create') }}">
+                            <i class="bi bi-camera-fill"></i> Absen (Foto)
                         </a>
                     </li>
                 @endif
@@ -177,7 +168,7 @@
             <div class="user-menu">
                 <div class="user-info d-none d-md-block">
                     <p class="user-name">{{ Auth::user()->name }}</p>
-                    <p class="user-role">{{ ucfirst(Auth::user()->role) }}</p>
+                    <p class="user-role">{{ Auth::user()->isAdmin() ? 'Admin' : 'Staff' }}</p>
                 </div>
                 <div class="dropdown">
                     <button class="user-avatar dropdown-toggle" type="button" data-bs-toggle="dropdown" style="border: none;">

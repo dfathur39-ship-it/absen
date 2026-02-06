@@ -39,44 +39,54 @@ class AuthController extends Controller
     }
 
     /**
-     * Register hanya untuk Siswa. Admin tidak bisa register.
+     * Register untuk Staff. Admin tidak bisa register.
      */
     public function showRegister()
     {
         if (Auth::check()) {
             return redirect()->route('dashboard');
         }
-        $kelas = Kelas::where('is_active', true)->get();
-        return view('auth.register', compact('kelas'));
+        return view('auth.register');
     }
 
     public function register(Request $request)
     {
         $request->validate([
-            'nis' => 'required|exists:siswa,nis',
+            'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'jenis_kelamin' => 'required|in:L,P',
             'password' => ['required', 'confirmed', Password::min(8)],
         ]);
 
-        $siswa = Siswa::where('nis', $request->nis)->where('is_active', true)->firstOrFail();
+        $kelasStaff = Kelas::firstOrCreate(
+            ['nama_kelas' => 'STAFF', 'tingkat' => 'STAFF'],
+            ['jurusan' => null, 'wali_kelas' => null, 'tahun_ajaran' => now()->year, 'is_active' => true]
+        );
 
-        if (User::where('siswa_id', $siswa->id)->exists()) {
-            return back()->withErrors(['nis' => 'NIS ini sudah terdaftar memiliki akun.'])->withInput();
-        }
+        // Simpan profil staff ke tabel siswa (dipakai sebagai master staff agar laporan tetap jalan)
+        $nisAuto = 'STF-' . now()->format('YmdHis') . '-' . random_int(100, 999);
+        $siswa = Siswa::create([
+            'nis' => $nisAuto,
+            'nama_lengkap' => $request->name,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'kelas_id' => $kelasStaff->id,
+            'email' => $request->email,
+            'is_active' => true,
+        ]);
 
         $user = User::create([
-            'name' => $siswa->nama_lengkap,
+            'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'siswa',
+            'role' => 'siswa', // secara tampilan disebut "staff"
             'siswa_id' => $siswa->id,
-            'kelas_id' => $siswa->kelas_id,
+            'kelas_id' => $kelasStaff->id,
         ]);
 
         Auth::login($user);
 
         return redirect()->route('dashboard')
-            ->with('success', 'Registrasi berhasil! Selamat datang di Absensi Siswa.');
+            ->with('success', 'Registrasi berhasil! Selamat datang di Absensi Staff.');
     }
 
     public function logout(Request $request)

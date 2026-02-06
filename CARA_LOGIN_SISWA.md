@@ -1,6 +1,6 @@
-# Cara Login untuk Siswa - Panduan Singkat
+# Cara Login untuk Staff - Panduan Singkat
 
-## ✅ Langkah-Langkah Login Siswa
+## ✅ Langkah-Langkah Login Staff
 
 ### 1. Buka Halaman Login
 - Akses: `http://absensi-siswa.test/login`
@@ -13,17 +13,16 @@
 - **Ingat saya** (opsional): Centang jika ingin tetap login
 
 ### 3. Klik "Masuk"
-- Jika berhasil → Redirect ke Dashboard Siswa
+- Jika berhasil → Redirect ke Dashboard Staff
 - Jika gagal → Cek email dan password
 
 ---
 
-## 📋 Syarat Login Siswa
+## 📋 Syarat Login Staff
 
 ✅ **Harus sudah register terlebih dahulu**
 - Buka: `http://absensi-siswa.test/register`
-- Masukkan NIS yang sudah terdaftar
-- Buat email dan password
+- Isi nama, email, dan password
 
 ✅ **Email dan password harus benar**
 - Email harus sesuai dengan yang digunakan saat register
@@ -33,12 +32,12 @@
 
 ## 🎯 Setelah Login Berhasil
 
-Siswa akan melihat:
-- ✅ Dashboard Siswa dengan informasi pribadi
-- ✅ NIS, Kelas, Status Absen Hari Ini
+Staff akan melihat:
+- ✅ Dashboard Staff dengan informasi pribadi
+- ✅ Email, Unit, Status Absen Hari Ini
 - ✅ Rekap Bulan Ini (Hadir, Izin, Sakit, Alpha)
 - ✅ Riwayat Absensi Terbaru
-- ✅ Panduan Scan QR Code
+- ✅ Form absen (upload foto + status)
 
 ---
 
@@ -60,7 +59,7 @@ Kemudian:
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-$user = User::where('email', 'email_siswa@email.com')->first();
+$user = User::where('email', 'email_staff@email.com')->first();
 $user->password = Hash::make('passwordbaru123');
 $user->save();
 ```
@@ -78,8 +77,8 @@ $user->save();
 
 ### Error: "Tidak bisa login"
 **Solusi:**
-- Pastikan sudah register dengan NIS yang valid
-- Pastikan siswa sudah ditambahkan admin di "Data Siswa"
+- Pastikan sudah register terlebih dahulu
+- Pastikan staff sudah aktif (jika nonaktif, hubungi admin)
 - Cek apakah akun masih aktif
 
 ### Setelah login, tidak redirect ke dashboard
@@ -90,22 +89,20 @@ $user->save();
 
 ### Dashboard kosong atau error
 **Solusi:**
-- Pastikan data siswa lengkap (ada NIS, kelas, dll)
-- Hubungi admin untuk memastikan data siswa benar
-- Pastikan siswa memiliki kelas yang aktif
+- Hubungi admin untuk memastikan data staff benar
 
 ---
 
 ## 📱 Login via HP (Mobile)
 
-Siswa juga bisa login menggunakan HP:
+Staff juga bisa login menggunakan HP:
 1. Buka browser di HP (Chrome, Firefox, Safari, dll)
 2. Akses: `http://absensi-siswa.test/login`
 3. Masukkan email dan password
-4. Login berhasil → Dashboard siswa akan tampil di HP
+4. Login berhasil → Dashboard staff akan tampil di HP
 
 **Keuntungan login via HP:**
-- Bisa langsung scan QR code untuk absen
+- Bisa langsung absen dengan upload foto
 - Lebih mudah dan praktis
 - Bisa absen langsung dari HP
 
@@ -113,10 +110,9 @@ Siswa juga bisa login menggunakan HP:
 
 ## ✅ Checklist Sebelum Login
 
-- [ ] Sudah register dengan NIS yang valid
+- [ ] Sudah register dengan nama + email
 - [ ] Ingat email yang digunakan saat register
 - [ ] Ingat password yang dibuat
-- [ ] NIS sudah ditambahkan admin di "Data Siswa"
 - [ ] Koneksi internet aktif
 
 ---
@@ -124,16 +120,16 @@ Siswa juga bisa login menggunakan HP:
 ## 🎓 Contoh Login
 
 **Contoh jika sudah register:**
-- Email: `siswa1@email.com`
+- Email: `staff1@email.com`
 - Password: `password123`
 
 **Langkah:**
 1. Buka `http://absensi-siswa.test/login`
-2. Masukkan email: `siswa1@email.com`
+2. Masukkan email: `staff1@email.com`
 3. Masukkan password: `password123`
 4. Klik "Masuk"
-5. ✅ Berhasil → Dashboard Siswa muncul
+5. ✅ Berhasil → Dashboard Staff muncul
 
 ---
 
-**Selamat menggunakan aplikasi!** 🎉
+**Selamat menggunakan aplikasi!**

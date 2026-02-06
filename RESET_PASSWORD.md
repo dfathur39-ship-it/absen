@@ -1,4 +1,4 @@
-# Cara Reset Password Admin - Absensi Siswa
+# Cara Reset Password Admin - Absensi Staff
 
 ## Solusi 1: Gunakan Kredensial Default
 

@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah Siswa')
+@section('title', 'Tambah Staff')
 
 @section('content')
 <div class="row justify-content-center">
     <div class="col-lg-10">
         <div class="card">
-            <div class="card-header"><h5 class="mb-0"><i class="bi bi-person-plus me-2 text-primary"></i>Tambah Siswa Baru</h5></div>
+            <div class="card-header"><h5 class="mb-0"><i class="bi bi-person-plus me-2 text-primary"></i>Tambah Staff Baru</h5></div>
             <div class="card-body">
                 <form action="{{ route('siswa.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -14,8 +14,8 @@
                         <div class="col-md-6">
                             <h6 class="mb-3 text-primary">Data Utama</h6>
                             <div class="mb-3">
-                                <label class="form-label fw-semibold">NIS <span class="text-danger">*</span></label>
-                                <input type="text" name="nis" class="form-control @error('nis') is-invalid @enderror" value="{{ old('nis') }}" placeholder="Nomor Induk Siswa" required>
+                                <label class="form-label fw-semibold">ID Staff</label>
+                                <input type="text" name="nis" class="form-control @error('nis') is-invalid @enderror" value="{{ old('nis') }}" placeholder="Kosongkan untuk auto-generate">
                                 @error('nis')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="mb-3">
@@ -33,7 +33,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-semibold">Kelas <span class="text-danger">*</span></label>
+                                    <label class="form-label fw-semibold">Unit <span class="text-danger">*</span></label>
                                     <select name="kelas_id" class="form-select" required>
                                         <option value="">-- Pilih Kelas --</option>
                                         @foreach($kelas as $k)

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Detail Siswa')
+@section('title', 'Detail Staff')
 
 @section('content')
 <div class="row g-4">
@@ -13,13 +13,13 @@
                     <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-3" style="width:120px;height:120px;font-size:2.5rem;">{{ strtoupper(substr($siswa->nama_lengkap, 0, 2)) }}</div>
                 @endif
                 <h4 class="mb-1">{{ $siswa->nama_lengkap }}</h4>
-                <p class="text-muted mb-2">NIS: {{ $siswa->nis }}</p>
+                <p class="text-muted mb-2">ID Staff: {{ $siswa->nis }}</p>
                 <span class="badge {{ $siswa->jenis_kelamin == 'L' ? 'bg-primary' : 'bg-danger' }} mb-2">{{ $siswa->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</span>
                 <br>
                 <span class="badge {{ $siswa->is_active ? 'bg-success' : 'bg-secondary' }}">{{ $siswa->is_active ? 'Aktif' : 'Nonaktif' }}</span>
             </div>
             <div class="card-body border-top">
-                <div class="mb-3"><small class="text-muted d-block">Kelas</small><strong>{{ $siswa->kelas->tingkat ?? '-' }} {{ $siswa->kelas->nama_kelas ?? '' }}</strong></div>
+                <div class="mb-3"><small class="text-muted d-block">Unit</small><strong>{{ $siswa->kelas->tingkat ?? '-' }} {{ $siswa->kelas->nama_kelas ?? '' }}</strong></div>
                 <div class="mb-3"><small class="text-muted d-block">Tempat, Tanggal Lahir</small><strong>{{ $siswa->tempat_lahir ?? '-' }}, {{ $siswa->tanggal_lahir ? $siswa->tanggal_lahir->format('d/m/Y') : '-' }}</strong></div>
                 <div class="mb-3"><small class="text-muted d-block">No. Telepon</small><strong>{{ $siswa->no_telepon ?? '-' }}</strong></div>
                 <div class="mb-3"><small class="text-muted d-block">Email</small><strong>{{ $siswa->email ?? '-' }}</strong></div>

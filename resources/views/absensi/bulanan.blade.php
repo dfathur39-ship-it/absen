@@ -9,15 +9,6 @@
             <div class="card-body">
                 <form action="{{ route('absensi.bulanan') }}" method="GET" class="row g-3 align-items-end">
                     <div class="col-md-3">
-                        <label class="form-label fw-semibold">Pilih Kelas</label>
-                        <select name="kelas_id" class="form-select" required>
-                            <option value="">-- Pilih Kelas --</option>
-                            @foreach($kelas as $k)
-                                <option value="{{ $k->id }}" {{ $selectedKelas == $k->id ? 'selected' : '' }}>{{ $k->tingkat }} {{ $k->nama_kelas }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-3">
                         <label class="form-label fw-semibold">Bulan</label>
                         <select name="bulan" class="form-select">
                             @foreach($months as $num => $name)
@@ -36,23 +27,12 @@
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-primary w-100"><i class="bi bi-search me-2"></i>Tampilkan</button>
                     </div>
-                    @if($selectedKelas)
-                    <div class="col-md-2">
-                        <form action="{{ route('report.download.bulanan') }}" method="POST" class="d-inline">
-                            @csrf
-                            <input type="hidden" name="kelas_id" value="{{ $selectedKelas }}">
-                            <input type="hidden" name="bulan" value="{{ $selectedMonth }}">
-                            <input type="hidden" name="tahun" value="{{ $selectedYear }}">
-                            <button type="submit" class="btn btn-danger w-100"><i class="bi bi-file-pdf me-2"></i>Download PDF</button>
-                        </form>
-                    </div>
-                    @endif
                 </form>
             </div>
         </div>
     </div>
 
-    @if($selectedKelas && count($absensiData) > 0)
+    @if(count($absensiData) > 0)
     <div class="col-12">
         <div class="card">
             <div class="card-header">
@@ -64,7 +44,7 @@
                         <thead>
                             <tr>
                                 <th rowspan="2" class="text-center align-middle" style="min-width: 50px;">No</th>
-                                <th rowspan="2" class="align-middle" style="min-width: 150px;">Nama Siswa</th>
+                                <th rowspan="2" class="align-middle" style="min-width: 150px;">Nama Staff</th>
                                 <th colspan="{{ $daysInMonth }}" class="text-center">Tanggal</th>
                                 <th colspan="4" class="text-center">Jumlah</th>
                             </tr>
@@ -106,15 +86,6 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-        </div>
-    </div>
-    @elseif($selectedKelas)
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body text-center py-5 text-muted">
-                <i class="bi bi-inbox fs-1 d-block mb-2"></i>
-                Tidak ada data absensi untuk periode ini
             </div>
         </div>
     </div>

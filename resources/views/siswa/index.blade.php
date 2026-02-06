@@ -1,22 +1,22 @@
 @extends('layouts.app')
 
-@section('title', 'Data Siswa')
+@section('title', 'Data Staff')
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-        <h4 class="mb-1">Manajemen Siswa</h4>
-        <p class="text-muted mb-0">Total {{ $siswa->total() }} siswa terdaftar</p>
+        <h4 class="mb-1">Manajemen Staff</h4>
+        <p class="text-muted mb-0">Total {{ $siswa->total() }} staff terdaftar</p>
     </div>
-    <a href="{{ route('siswa.create') }}" class="btn btn-primary"><i class="bi bi-plus-lg me-2"></i>Tambah Siswa</a>
+    <a href="{{ route('siswa.create') }}" class="btn btn-primary"><i class="bi bi-plus-lg me-2"></i>Tambah Staff</a>
 </div>
 
 <div class="card mb-4">
     <div class="card-body">
         <form action="{{ route('siswa.index') }}" method="GET" class="row g-3 align-items-end">
             <div class="col-md-4">
-                <label class="form-label">Cari Siswa</label>
-                <input type="text" name="search" class="form-control" placeholder="Nama atau NIS..." value="{{ request('search') }}">
+                <label class="form-label">Cari Staff</label>
+                <input type="text" name="search" class="form-control" placeholder="Nama atau ID Staff..." value="{{ request('search') }}">
             </div>
             <div class="col-md-3">
                 <label class="form-label">Filter Kelas</label>
@@ -40,7 +40,7 @@
                 <thead>
                     <tr>
                         <th width="50">No</th>
-                        <th width="100">NIS</th>
+                        <th width="140">ID Staff</th>
                         <th>Nama Lengkap</th>
                         <th width="60">L/P</th>
                         <th>Kelas</th>
@@ -72,7 +72,7 @@
                                 <div class="btn-group btn-group-sm">
                                     <a href="{{ route('siswa.show', $s) }}" class="btn btn-light" title="Detail"><i class="bi bi-eye"></i></a>
                                     <a href="{{ route('siswa.edit', $s) }}" class="btn btn-light" title="Edit"><i class="bi bi-pencil"></i></a>
-                                    <form action="{{ route('siswa.destroy', $s) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus siswa ini?')">
+                                    <form action="{{ route('siswa.destroy', $s) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus staff ini?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-light text-danger" title="Hapus"><i class="bi bi-trash"></i></button>
@@ -81,7 +81,7 @@
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="8" class="text-center text-muted py-5"><i class="bi bi-inbox fs-1 d-block mb-2"></i>Tidak ada data siswa</td></tr>
+                        <tr><td colspan="8" class="text-center text-muted py-5"><i class="bi bi-inbox fs-1 d-block mb-2"></i>Tidak ada data staff</td></tr>
                     @endforelse
                 </tbody>
             </table>
